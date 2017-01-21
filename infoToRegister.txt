@@ -12,3 +12,4 @@ references for python
 
 https://www.youtube.com/watch?v=FLZvOKSCkxY
 https://pythonprogramming.net/
+https://www.youtube.com/watch?v=o_OZdbCzHUA
