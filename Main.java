@@ -18,7 +18,7 @@ public class Main{
         sc = new Scanner(System.in);
         stopWords = new String[]{"bye", "stop", "end", "quit", "goodbye"};
 
-        // prompt user for input
+        // prompt user for input.
         System.out.println("Hello, how are you feeling?");
 
         while(true){
