@@ -6,4 +6,9 @@ Your credentials are the following:
 
             Password : dmGXtVl6
 
-https://webapi-intern.nuance.mobi/nuance-conuhacks/#
+https://webapi-intern.nuance.mobi/nuance-
+
+references for python
+
+https://www.youtube.com/watch?v=FLZvOKSCkxY
+https://pythonprogramming.net/
