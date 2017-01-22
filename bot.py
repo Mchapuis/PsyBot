@@ -126,7 +126,7 @@ def respondToTweet():
         #
         # make request to yellow pages.
         #
-        yellow_url = "http://api.sandbox.yellowapi.com/FindBusiness/?what="+ url_terms +"&where=Montreal&UID=127.0.0.1&apikey=g8vnmwnr74bzc2wftk3emaxh&fmt=JSON"
+        yellow_url = "http://api.sandbox.yellowapi.com/FindBusiness/?what="+ url_terms +"&where=Montreal&UID=127.0.0.1&apikey=XXXXXX&fmt=JSON"
 
         if(not url_terms == ""):
 
