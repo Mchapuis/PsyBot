@@ -117,13 +117,6 @@ def respondToTweet():
         elif( len(terms) > 1 ):
             terms_string = ", ".join(terms[:-1]) + ", and " + terms[-1]
 
-<<<<<<< HEAD
-=======
-    #
-    # make request to yellow pages
-    #
-    yellow_url = "http://api.sandbox.yellowapi.com/FindBusiness/?what="+ url_terms +"&where=Montreal&UID=127.0.0.1&apikey=XXXXXXXXXXXX&fmt=JSON"
->>>>>>> e18f1e72235a62145180140f635faf19f8df8e59
 
         #
         # a string of terms that can be encoded into the yellow pages url
@@ -131,7 +124,7 @@ def respondToTweet():
         url_terms = terms_string.replace(" ", "%20")
 
         #
-        # make request to yellow pages
+        # make request to yellow pages.
         #
         yellow_url = "http://api.sandbox.yellowapi.com/FindBusiness/?what="+ url_terms +"&where=Montreal&UID=127.0.0.1&apikey=g8vnmwnr74bzc2wftk3emaxh&fmt=JSON"
 
