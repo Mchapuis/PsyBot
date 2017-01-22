@@ -176,8 +176,6 @@ def respondToTweet():
                 limitMessage = limitMessage[0:139]
                 #api.update_status(limitMessage, s.id)
 
-                #api.update_status(message + " to find " + terms_string + " check out: " + places_string, s.id)
-
                 # debug
                 debug_message = message + " to find " + terms_string + " check out: " + places_string
                 print("*** *** *** *** *** *** ***")
