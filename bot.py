@@ -41,7 +41,7 @@ api = tweepy.API(auth)
 #
 # words that will not be added to the API search
 #
-block_words = ["@", "rt", "hey", "-", "askyp", ""]
+block_words = ["@", "rt", "hey", "-", "askyp", "", "buy", "city", "test1", "test", "test2", "butterxxxx", "_apitester_", "product", "lt", "name"]
 
 #
 # global holder for tweets, and seen ids
@@ -85,7 +85,6 @@ def respondToTweet():
         f.write( ",".join(seen_id) )
         f.close()
 
-
         # add username to block_words
         block_words.append(s.user.screen_name.lower())
 
@@ -104,8 +103,13 @@ def respondToTweet():
         terms = []
         for t in tagged:
             if(t[1] in ["NNP", "NNS", "JJ", "NN"]):
-                if(not t[0].lower() in block_words):
+                if(t[0].lower() == "rt"):
+                    threading.Timer(1.5, respondToTweet).start()
+                    return 0
+
+                elif(not t[0].lower() in block_words):
                     terms.append( t[0].lower() )
+
         #
         # build list of search terms
         #
@@ -124,8 +128,8 @@ def respondToTweet():
         #
         # make request to yellow pages.
         #
-        yellow_url = "http://api.sandbox.yellowapi.com/FindBusiness/?what="+ url_terms +"&where=Montreal&UID=127.0.0.1&fmt=JSON&apikey=" + apikey
-        
+        yellow_url = "http://api.sandbox.yellowapi.com/FindBusiness/?what="+ url_terms +"&where=Montreal&UID=127.0.0.1&fmt=JSON&apikey=" + "g8vnmwnr74bzc2wftk3emaxh"
+
         if(not url_terms == ""):
 
             print("*** will query")
@@ -141,7 +145,7 @@ def respondToTweet():
             except:
                 threading.Timer(6, respondToTweet).start()
                 return 0
-            
+
             #
             # trim listings to max of 2
             #
@@ -170,10 +174,10 @@ def respondToTweet():
                 message = "@" + s.user.screen_name
                 limitMessage = message + " to find " + terms_string + " check out: " + places_string
                 limitMessage = limitMessage[0:139]
-                api.update_status(limitMessage, s.id)
+                #api.update_status(limitMessage, s.id)
 
                 #api.update_status(message + " to find " + terms_string + " check out: " + places_string, s.id)
- 
+
                 # debug
                 debug_message = message + " to find " + terms_string + " check out: " + places_string
                 print("*** *** *** *** *** *** ***")
