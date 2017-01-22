@@ -106,35 +106,6 @@ def respondToTweet():
             if(t[1] in ["NNP", "NNS", "JJ", "NN"]):
                 if(not t[0].lower() in block_words):
                     terms.append( t[0].lower() )
-
-        #
-        # build list of search terms
-        #
-        terms_string = ""
-        if( len(terms) == 1 ):
-            terms_string = terms[0]
-
-        # add username to block_words
-        block_words.append(s.user.screen_name.lower())
-
-        print("tweet: " + s.text)
-        print("")
-
-        #
-        # figure out tags for words in tweet "s"
-        #
-        tokens = nltk.word_tokenize( s.text )
-        tagged = nltk.pos_tag(tokens)
-
-        #
-        # build array of NNP terms
-        #
-        terms = []
-        for t in tagged:
-            if(t[1] in ["NNP", "NNS", "JJ", "NN"]):
-                if(not t[0].lower() in block_words):
-                    terms.append( t[0].lower() )
-
         #
         # build list of search terms
         #
@@ -197,22 +168,18 @@ def respondToTweet():
                 # send reply message to user
                 #
                 message = "@" + s.user.screen_name
- 
                 limitMessage = message + " to find " + terms_string + " check out: " + places_string
                 limitMessage = limitMessage[0:139]
                 api.update_status(limitMessage, s.id)
 
                 #api.update_status(message + " to find " + terms_string + " check out: " + places_string, s.id)
  
-
                 # debug
                 debug_message = message + " to find " + terms_string + " check out: " + places_string
                 print("*** *** *** *** *** *** ***")
                 print(debug_message)
                 print("*** *** *** *** *** *** ***")
-
                 print("")
-
         else:
             print("... no products found in tweet")
             print("")
@@ -231,9 +198,5 @@ def respondToTweet():
 # initial call to respondToTweet then it's called every n sec
 #
 respondToTweet()
-
-
-
-
 
 #end
