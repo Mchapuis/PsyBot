@@ -85,13 +85,6 @@ def respondToTweet():
         f.write( ",".join(seen_id) )
         f.close()
 
-        #
-        # write seen ids to file
-        #
-        f = open("cache.txt", "w")
-        f.write( ",".join(seen_id) )
-        f.close()
-
 
         # add username to block_words
         block_words.append(s.user.screen_name.lower())
@@ -151,38 +144,6 @@ def respondToTweet():
 
         elif( len(terms) > 1 ):
             terms_string = ", ".join(terms[:-1]) + ", and " + terms[-1]
-
-
-        #
-        # a string of terms that can be encoded into the yellow pages url
-        #
-        url_terms = terms_string.replace(" ", "%20")
-
-        #
-        # make request to yellow pages.
-        #
-        yellow_url = "http://api.sandbox.yellowapi.com/FindBusiness/?what="+ url_terms +"&where=Montreal&UID=127.0.0.1&fmt=JSON&apikey=" + apikey
-
-        if(not url_terms == ""):
-
-            print("*** will query")
-            print(yellow_url)
-            print("")
-
-            res = ""
-            try:
-                with urllib.request.urlopen(yellow_url) as response:
-                    reader = codecs.getreader("utf-8")
-                    res = json.load(reader(response))
-
-            except:
-                threading.Timer(6, respondToTweet).start()
-                return 0
-
-
-        elif( len(terms) > 1 ):
-            terms_string = ", ".join(terms[:-1]) + ", and " + terms[-1]
-
 
         #
         # a string of terms that can be encoded into the yellow pages url
@@ -209,8 +170,7 @@ def respondToTweet():
             except:
                 threading.Timer(6, respondToTweet).start()
                 return 0
-
- 
+            
             #
             # trim listings to max of 2
             #
@@ -242,7 +202,7 @@ def respondToTweet():
                 limitMessage = limitMessage[0:139]
                 api.update_status(limitMessage, s.id)
 
-                api.update_status(message + " to find " + terms_string + " check out: " + places_string, s.id)
+                #api.update_status(message + " to find " + terms_string + " check out: " + places_string, s.id)
  
 
                 # debug
