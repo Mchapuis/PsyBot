@@ -85,6 +85,41 @@ def respondToTweet():
         f.write( ",".join(seen_id) )
         f.close()
 
+        #
+        # write seen ids to file
+        #
+        f = open("cache.txt", "w")
+        f.write( ",".join(seen_id) )
+        f.close()
+
+
+        # add username to block_words
+        block_words.append(s.user.screen_name.lower())
+
+        print("tweet: " + s.text)
+        print("")
+
+        #
+        # figure out tags for words in tweet "s"
+        #
+        tokens = nltk.word_tokenize( s.text )
+        tagged = nltk.pos_tag(tokens)
+
+        #
+        # build array of NNP terms
+        #
+        terms = []
+        for t in tagged:
+            if(t[1] in ["NNP", "NNS", "JJ", "NN"]):
+                if(not t[0].lower() in block_words):
+                    terms.append( t[0].lower() )
+
+        #
+        # build list of search terms
+        #
+        terms_string = ""
+        if( len(terms) == 1 ):
+            terms_string = terms[0]
 
         # add username to block_words
         block_words.append(s.user.screen_name.lower())
@@ -144,6 +179,38 @@ def respondToTweet():
                 threading.Timer(6, respondToTweet).start()
                 return 0
 
+
+        elif( len(terms) > 1 ):
+            terms_string = ", ".join(terms[:-1]) + ", and " + terms[-1]
+
+
+        #
+        # a string of terms that can be encoded into the yellow pages url
+        #
+        url_terms = terms_string.replace(" ", "%20")
+
+        #
+        # make request to yellow pages.
+        #
+        yellow_url = "http://api.sandbox.yellowapi.com/FindBusiness/?what="+ url_terms +"&where=Montreal&UID=127.0.0.1&apikey=XXXXXX&fmt=JSON"
+
+        if(not url_terms == ""):
+
+            print("*** will query")
+            print(yellow_url)
+            print("")
+
+            res = ""
+            try:
+                with urllib.request.urlopen(yellow_url) as response:
+                    reader = codecs.getreader("utf-8")
+                    res = json.load(reader(response))
+
+            except:
+                threading.Timer(6, respondToTweet).start()
+                return 0
+
+ 
             #
             # trim listings to max of 2
             #
@@ -170,9 +237,13 @@ def respondToTweet():
                 # send reply message to user
                 #
                 message = "@" + s.user.screen_name
+ 
                 limitMessage = message + " to find " + terms_string + " check out: " + places_string
                 limitMessage = limitMessage[0:139]
                 api.update_status(limitMessage, s.id)
+
+                api.update_status(message + " to find " + terms_string + " check out: " + places_string, s.id)
+ 
 
                 # debug
                 debug_message = message + " to find " + terms_string + " check out: " + places_string
