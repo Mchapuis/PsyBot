@@ -9,3 +9,6 @@ A_TOKEN = ''
 
 # Access Token Secret
 A_TOKEN_SECRET = ''
+
+# Access Yellow Page APIKEY
+apikey=''
